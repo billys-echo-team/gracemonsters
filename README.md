@@ -1,9 +1,9 @@
 # Boilermaker
 
-Chris Choi
-Anna Wu
-Alan Tang- a second time
-Lee edward - Cloned.
+"Edward Lee"
+"Chris"
+"Alan"
+"Anna"
 
 _Good things come in pairs_
 
