@@ -1,5 +1,7 @@
 # Boilermaker
 
+Anna Wu
+
 _Good things come in pairs_
 
 Looking to mix up a backend with `express`/`sequelize` and a frontend with
@@ -224,4 +226,3 @@ git-tracking to be cluttered with production build files like
 `bundle.js`! By doing these steps, we make sure our development and
 production environments both stay nice and clean!
 
-Anna Wu
