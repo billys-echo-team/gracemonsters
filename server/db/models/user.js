@@ -41,7 +41,7 @@ const User = db.define('user', {
   },
   payment: {
     type: Sequelize.STRING,
-    allowNull: false,
+    allowNull: true,
     validate: {
       isCreditCard: true
     }

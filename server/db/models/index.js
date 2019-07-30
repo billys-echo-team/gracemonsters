@@ -8,8 +8,8 @@ User.hasMany(Order)
 Order.belongsTo(User)
 
 //*Many to Many
-Order.belongsToMany(Item, {through: 'Cart'})
-Item.belongsToMany(Cart, {through: 'Cart'})
+Order.belongsToMany(Item, {through: 'cart'})
+Item.belongsToMany(Order, {through: 'cart'})
 
 module.exports = {
   User,
