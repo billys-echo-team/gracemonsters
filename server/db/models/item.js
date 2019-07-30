@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Items = db.define('items'{
-    Name: {
+    name: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
