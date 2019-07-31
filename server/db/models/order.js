@@ -21,7 +21,7 @@ const Order = db.define('order', {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      isCreditCard: true
+      notEmpty: true
     }
   },
   email: {
