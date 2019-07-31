@@ -6,7 +6,8 @@ const Order = db.define('order', {
     type: Sequelize.DATE,
     allowNull: false,
     validate: {
-      notEmpty: true
+      notEmpty: true,
+      isDate: true
     }
   },
   userId: {
@@ -32,7 +33,7 @@ const Order = db.define('order', {
     }
   },
   address: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true
