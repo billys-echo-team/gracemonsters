@@ -1,23 +1,20 @@
 const router = require('express').Router()
-const {Cart, Order} = require('../db/models')
+const {Cart, Order, Item} = require('../db/models')
 
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
     if (req.user) {
-      const cart = await Cart.findAll({
+      const cart = await Order.findOne({
+        where: {userId: req.user.id, isCart: true},
         include: [
           {
-            model: Order,
-            where: {
-              userId: req.user.id,
-              isCart: true
-            }
+            model: Item
           }
         ]
       })
-      res.json(cart)
+      res.json(cart.items)
     } else {
       res.json([])
     }
