@@ -1,6 +1,7 @@
 const db = require('./server/db')
 const User = require('./server/db/models/user')
 const Item = require('./server/db/models/item')
+const Order = require('./server/db/models/order')
 
 const seed = async () => {
   try {
@@ -66,6 +67,33 @@ const seed = async () => {
       imageUrl:
         'https://cdn.bulbagarden.net/upload/thumb/3/39/007Squirtle.png/500px-007Squirtle.png',
       description: 'its a squirtle'
+    })
+    await Order.create({
+      date: '7/7/7777',
+      userId: 1,
+      isCart: true,
+      payment: 5555555555555555,
+      email: 'bulbasaurusrex@pokeman.com',
+      address: '123 fake st',
+      shippingStatus: 'pending'
+    })
+    await Order.create({
+      date: '7/7/7777',
+      userId: 1,
+      isCart: true,
+      payment: 5555555555555555,
+      email: 'pikachu@pokeman.com',
+      address: '123 fake st',
+      shippingStatus: 'pending'
+    })
+    await Order.create({
+      date: '12/12/7777',
+      userId: 2,
+      isCart: true,
+      payment: 5555555555555555,
+      email: 'charmander@pokeman.com',
+      address: '123 fake st',
+      shippingStatus: 'pending'
     })
     console.log(`
       Seed success!
