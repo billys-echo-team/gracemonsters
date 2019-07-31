@@ -33,7 +33,6 @@ const Item = db.define('item', {
     type: Sequelize.INTEGER,
     defaultValue: 0,
     validate: {
-      isFloat: true,
       min: 0.0
     }
   },

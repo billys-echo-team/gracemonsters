@@ -33,7 +33,7 @@ const User = db.define('user', {
     }
   },
   address: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allowNull: false,
     validate: {
       notEmpty: true

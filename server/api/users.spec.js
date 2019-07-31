@@ -12,11 +12,18 @@ describe('User routes', () => {
   })
 
   describe('/api/users/', () => {
-    const codysEmail = 'cody@puppybook.com'
+    const brocksEmail = 'brock@email.com'
 
     beforeEach(() => {
       return User.create({
-        email: codysEmail
+        userName: 'thirstyBrock',
+        firstName: 'Brock',
+        lastName: 'Takeshi',
+        email: 'brock@email.com',
+        address: '123 Kanto Region',
+        payment: null,
+        password: '456',
+        imageUrl: 'https://cdn.bulbagarden.net/upload/6/6a/Brock_SM.png'
       })
     })
 
@@ -26,7 +33,7 @@ describe('User routes', () => {
         .expect(200)
 
       expect(res.body).to.be.an('array')
-      expect(res.body[0].email).to.be.equal(codysEmail)
+      expect(res.body[0].email).to.be.equal(brocksEmail)
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
