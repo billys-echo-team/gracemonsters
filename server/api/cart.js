@@ -14,7 +14,7 @@ router.get('/', async (req, res, next) => {
           }
         ]
       })
-      res.json(cart.items)
+      res.json(cart)
     } else {
       res.json([])
     }

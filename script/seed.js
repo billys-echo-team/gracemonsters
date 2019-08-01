@@ -69,28 +69,31 @@ const seed = async () => {
         'https://cdn.bulbagarden.net/upload/thumb/3/39/007Squirtle.png/500px-007Squirtle.png',
       description: 'its a squirtle'
     })
-    await Order.create(
+    // await Order.create(
+    //   {
+    //     date: '7/7/7777',
+    //     userId: 1,
+    //     isCart: true,
+    //     payment: 5555555555555555,
+    //     email: 'bulbasaurusrex@pokeman.com',
+    //     address: '123 fake st',
+    //     shippingStatus: 'pending'
+    //   },
+    //   {include: [Item]}
+    // )
+
+    const orderOne = await Order.create(
       {
         date: '7/7/7777',
         userId: 1,
         isCart: true,
         payment: 5555555555555555,
-        email: 'bulbasaurusrex@pokeman.com',
+        email: 'pikachu@pokeman.com',
         address: '123 fake st',
         shippingStatus: 'pending'
       },
       {include: [Item]}
     )
-
-    const orderOne = await Order.create({
-      date: '7/7/7777',
-      userId: 1,
-      isCart: true,
-      payment: 5555555555555555,
-      email: 'pikachu@pokeman.com',
-      address: '123 fake st',
-      shippingStatus: 'pending'
-    })
 
     orderOne.addItem(bulbasaur)
     orderOne.addItem(charmander)
@@ -103,16 +106,6 @@ const seed = async () => {
       address: '123 fake st',
       shippingStatus: 'pending'
     })
-    // await Cart.create({
-    //   orderId: 3,
-    //   itemId: 1,
-    //   quantity: 5
-    // })
-    // await Cart.create({
-    //   orderId: 3,
-    //   itemId: 3,
-    //   quantity: 2
-    // })
 
     console.log(`
       Seed success!
