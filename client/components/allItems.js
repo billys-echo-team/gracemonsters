@@ -22,7 +22,7 @@ class AllItems extends React.Component {
                 <Link to={`items/${item.id}`} className="link">
                   <div className="item-box">
                     <img src={item.imageUrl} className="item-img" />
-                    <div className="item-name">${item.name}</div>
+                    <div className="item-name">{item.name}</div>
                   </div>
                 </Link>
                 {/* <button
