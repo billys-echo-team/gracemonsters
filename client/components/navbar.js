@@ -17,6 +17,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             Logout
           </a>
           <Link to="/shop">All Items</Link>
+          <Route exact path="/shop" component={allItems} />
         </div>
       ) : (
         <div>
@@ -24,7 +25,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
           <Link to="/shop">All Items</Link>
-          <Route excact path="/shop" component={allItems} />
+          <Route exact path="/shop" component={allItems} />
         </div>
       )}
     </nav>
