@@ -1,7 +1,7 @@
 const User = require('./user')
 const Order = require('./order')
 const Item = require('./item')
-const Cart = require('./cart')
+const OrderItem = require('./order_item')
 
 //*One to Many
 User.hasMany(Order)
@@ -15,5 +15,5 @@ module.exports = {
   User,
   Order,
   Item,
-  Cart
+  OrderItem
 }
