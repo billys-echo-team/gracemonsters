@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {BrowserRoouter as Router, Link, Route} from 'react-router-dom'
 import {logout} from '../store'
+import allItems from './allItems'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
@@ -15,12 +16,15 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <a href="#" onClick={handleClick}>
             Logout
           </a>
+          <Link to="/shop">All Items</Link>
         </div>
       ) : (
         <div>
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          <Link to="/shop">All Items</Link>
+          <Route excact path="/shop" component={allItems} />
         </div>
       )}
     </nav>
