@@ -2,6 +2,7 @@ const db = require('../server/db')
 const User = require('../server/db/models/user')
 const Item = require('../server/db/models/item')
 const Order = require('../server/db/models/order')
+const orderItem = require('../server/db/models/order_item')
 
 const seed = async () => {
   try {
@@ -40,17 +41,17 @@ const seed = async () => {
         'https://cdn.bulbagarden.net/upload/thumb/f/f6/Lets_Go_Pikachu_Eevee_Misty.png/367px-Lets_Go_Pikachu_Eevee_Misty.png'
     })
     //*Items dummy data
-    await Item.create({
+    const bulbasaur = await Item.create({
       name: 'Bulbasaur',
       element: 'grass',
       price: 20,
-      stock: 1,
+      stock: 2,
       imageUrl:
         'https://cdn.bulbagarden.net/upload/thumb/2/21/001Bulbasaur.png/500px-001Bulbasaur.png',
       description: 'its a bulbasaur'
     })
 
-    await Item.create({
+    const charmander = await Item.create({
       name: 'Charmander',
       element: 'fire',
       price: 20,
@@ -68,16 +69,20 @@ const seed = async () => {
         'https://cdn.bulbagarden.net/upload/thumb/3/39/007Squirtle.png/500px-007Squirtle.png',
       description: 'its a squirtle'
     })
-    await Order.create({
-      date: '7/7/7777',
-      userId: 1,
-      isCart: true,
-      payment: 5555555555555555,
-      email: 'bulbasaurusrex@pokeman.com',
-      address: '123 fake st',
-      shippingStatus: 'pending'
-    })
-    await Order.create({
+    await Order.create(
+      {
+        date: '7/7/7777',
+        userId: 1,
+        isCart: true,
+        payment: 5555555555555555,
+        email: 'bulbasaurusrex@pokeman.com',
+        address: '123 fake st',
+        shippingStatus: 'pending'
+      },
+      {include: [Item]}
+    )
+
+    const orderOne = await Order.create({
       date: '7/7/7777',
       userId: 1,
       isCart: true,
@@ -86,7 +91,10 @@ const seed = async () => {
       address: '123 fake st',
       shippingStatus: 'pending'
     })
-    await Order.create({
+
+    orderOne.addItem(bulbasaur)
+    orderOne.addItem(charmander)
+    const orderTwo = await Order.create({
       date: '12/12/7777',
       userId: 2,
       isCart: true,
@@ -95,6 +103,17 @@ const seed = async () => {
       address: '123 fake st',
       shippingStatus: 'pending'
     })
+    // await Cart.create({
+    //   orderId: 3,
+    //   itemId: 1,
+    //   quantity: 5
+    // })
+    // await Cart.create({
+    //   orderId: 3,
+    //   itemId: 3,
+    //   quantity: 2
+    // })
+
     console.log(`
       Seed success!
     `)
