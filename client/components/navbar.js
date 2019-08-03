@@ -18,8 +18,8 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             Logout
           </a>
           <Link to="/shop">All Items</Link>
-          <Route exact path="/shop" component={allItems} />
           <Link to="/cart">Cart</Link>
+          <Route exact path="/shop" component={allItems} />
           <Route exact path="/cart" component={cart} />
         </div>
       ) : (

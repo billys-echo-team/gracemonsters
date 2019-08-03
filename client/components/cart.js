@@ -22,6 +22,8 @@ class Cart extends React.Component {
                   <div className="item-box">
                     <img src={item.imageUrl} className="item-img" />
                     <div className="item-name">{item.name}</div>
+                    <div className="item-price">{item.price}</div>
+                    <div className="item-qty">{item.order_item.quantity}</div>
                   </div>
                 </Link>
                 {/* <button
