@@ -66,9 +66,9 @@ export const addCartItemThunk = newItem => async dispatch => {
     console.error(err)
   }
 }
-export const deleteCartItemThunk = newItem => async dispatch => {
+export const deleteCartItemThunk = id => async dispatch => {
   try {
-    let {data} = await axios.post(`/api/cart/${id}`)
+    let {data} = await axios.delete(`/api/cart/`, {data: {itemId: id}})
     if (data) {
       dispatch(deleteCartItem(data))
     }
@@ -104,10 +104,8 @@ const reducer = (cart = [], action) => {
     //   return {
     //     cartItems: [...state.items, action.item]
     //   }
-    // case DELETE_CART_ITEM:
-    //   return {
-    //     cartItems: state.items.filter(item => item.id !== action.id)
-    //   }
+    case DELETE_CART_ITEM:
+      return cart.filter(item => item.id !== action.item.id)
     default:
       return cart
   }

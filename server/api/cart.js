@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {OrderItem, Order, Item} = require('../db/models')
+const {order_item, Order, Item} = require('../db/models')
 
 module.exports = router
 
@@ -46,6 +46,23 @@ router.put('/', async (req, res, next) => {
     }
   } catch (error) {
     next(error)
+  }
+})
+
+router.delete('/', async (req, res, next) => {
+  if (req.user) {
+    const cart = await Order.findOne({
+      where: {userId: req.user.id, isCart: true}
+    })
+    if (cart) {
+      const item = await Item.findByPk(req.body.itemId)
+      cart.removeItem(item)
+      res.send(cart)
+    } else {
+      res.sendStatus(404)
+    }
+  } else {
+    res.sendStatus(404)
   }
 })
 
