@@ -1,5 +1,5 @@
 import React from 'react'
-import {getCartItemsThunk} from '../store/cart'
+import {getCartItemsThunk, deleteCartItemThunk} from '../store/cart'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
@@ -22,17 +22,20 @@ class Cart extends React.Component {
                   <div className="item-box">
                     <img src={item.imageUrl} className="item-img" />
                     <div className="item-name">{item.name}</div>
-                    <div className="item-price">{item.price}</div>
-                    <div className="item-qty">{item.order_item.quantity}</div>
+                    <div className="item-price">Price : {item.price}</div>
+                    <div className="item-id">ITEM ID {item.id}</div>
+                    <div className="item-qty">
+                      Quantity: {item.order_item.quantity}
+                    </div>
                   </div>
                 </Link>
-                {/* <button
-                        type="submit"
-                        className="button-delete-item"
-                        onClick={() => this.props.deleteItem(item.id)}
-                      >
-                        X
-                      </button> */}
+                <button
+                  type="submit"
+                  className="button-delete-item"
+                  onClick={() => this.props.deleteCartItemThunk(item.id)}
+                >
+                  Remove from Cart
+                </button>
               </div>
             </div>
           ))}
@@ -48,9 +51,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getCartItemsThunk: () => {
-      dispatch(getCartItemsThunk())
-    }
+    getCartItemsThunk: () => dispatch(getCartItemsThunk()),
+
+    deleteCartItemThunk: id => dispatch(deleteCartItemThunk(id))
   }
 }
 
