@@ -42,7 +42,7 @@ export const getCartItemsThunk = () => async dispatch => {
 
 export const incrementQtyThunk = id => async dispatch => {
   try {
-    let {data} = await axios.put(`/api/cartItems/${id}`)
+    let {data} = await axios.put(`/api/cart`, {data: {itemId: id}})
     dispatch(incrementQty(data))
   } catch (error) {
     console.log(err)
@@ -56,9 +56,9 @@ export const decrementQtyThunk = id => async dispatch => {
     console.log(err)
   }
 }
-export const addCartItemThunk = newItem => async dispatch => {
+export const addCartItemThunk = id => async dispatch => {
   try {
-    let {data} = await axios.post(`/api/cart`, newItem)
+    let {data} = await axios.put(`/api/shop/${id}`)
     if (data) {
       dispatch(addCartItem(data))
     }
