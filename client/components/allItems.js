@@ -11,7 +11,7 @@ class AllItems extends React.Component {
   }
 
   render() {
-    console.log('*****', this.props)
+    console.log(this.props.items)
     return (
       <div className="item-list">
         <h1>Items</h1>
