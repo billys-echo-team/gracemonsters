@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
 import {logout} from '../store'
 import allItems from './allItems'
+import cart from './cart'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
@@ -17,7 +18,9 @@ const Navbar = ({handleClick, isLoggedIn}) => (
             Logout
           </a>
           <Link to="/shop">All Items</Link>
+          <Link to="/cart">Cart</Link>
           <Route exact path="/shop" component={allItems} />
+          <Route exact path="/cart" component={cart} />
         </div>
       ) : (
         <div>
