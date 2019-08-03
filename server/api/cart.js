@@ -30,15 +30,15 @@ router.put('/', async (req, res, next) => {
         where: {userId: req.user.id, isCart: true}
       })
       if (cart) {
-        const item = await Item.findByPk(1)
-        cart.addItem(item, {through: {quantity: 2}})
+        const item = await Item.findByPk(3)
+        cart.addItem(item) //, {through: {quantity: 5}})
         res.send(cart)
       } else {
         const newCart = await Order.create({
           where: {userId: req.user.id, isCart: true}
         })
         const item = await Item.findByPk(1)
-        newCart.addItem(item, {through: {quantity: 2}})
+        newCart.addItem(item, {through: {quantity: 5}})
         res.send(newCart)
       }
     } else {
