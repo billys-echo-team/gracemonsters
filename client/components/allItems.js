@@ -19,7 +19,7 @@ class AllItems extends React.Component {
           {this.props.items.map(item => (
             <div key={item.id}>
               <div className="item-button-container">
-                <Link to={`items/${item.id}`} className="link">
+                <Link to={`/shop/${item.id}`} className="link">
                   <div className="item-box">
                     <img src={item.imageUrl} className="item-img" />
                     <div className="item-name">{item.name}</div>

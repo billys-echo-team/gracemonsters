@@ -10,3 +10,12 @@ router.get('/', async (req, res, next) => {
     next(error)
   }
 })
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    let data = await Item.findByPk(req.params.id)
+    res.json(data)
+  } catch (error) {
+    next(error)
+  }
+})

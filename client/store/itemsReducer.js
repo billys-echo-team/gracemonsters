@@ -46,9 +46,9 @@ export const getItemsThunk = () => {
 
 export const getSingleItemThunk = id => async dispatch => {
   try {
-    let res = await axios.get(`/api/shop/${id}`)
+    let {data} = await axios.get(`/api/shop/${id}`)
 
-    dispatch(getSingleItem(res.data))
+    dispatch(getSingleItem(data))
   } catch (error) {
     console.error(error)
   }
@@ -82,12 +82,8 @@ const itemReducer = (items = [], action) => {
       return action.items
     case GET_SINGLE_ITEM:
       let allItems = items.filter(item => item.id !== action.item.id)
-      items.push(action.item)
+      allItems.push(action.item)
       return allItems
-    // case ADD_ITEM:
-    //   return {
-    //     items: [...items, action.item]
-    //   }
     case DELETE_ITEM:
       return items.filter(item => item.id !== action.id)
     default:
