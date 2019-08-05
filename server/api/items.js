@@ -23,18 +23,39 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     if (req.user) {
+      // const cart = await Order.findOne({
+      //   where: {userId: req.user.id, isCart: true}
+      // })
       const cart = await Order.findOne({
-        where: {userId: req.user.id, isCart: true}
+        where: {userId: req.user.id, isCart: true},
+        include: [
+          {
+            model: Item
+          }
+        ]
       })
       if (cart) {
-        const item = await Item.findByPk(req.params.id)
-        cart.addItem(item) //, {through: {quantity: 5}})
-        res.send(cart)
+        const itemInCart = cart.items.find(
+          oneItem => oneItem.id === req.params.id
+        )
+
+        if (itemInCart) {
+          // } else {
+
+          const item = await Item.findByPk(req.params.id)
+          cart.addItem(item, {through: {quantity: itemInCart.quantity + 1}})
+          res.send(cart)
+          console.log(item)
+        } else {
+          const item = await Item.findByPk(req.params.id)
+          cart.addItem(item, {through: {quantity: 1}})
+          res.send(cart)
+        }
       } else {
         const newCart = await Order.create({
           where: {userId: req.user.id, isCart: true}
         })
-        const item = await Item.findByPk(1)
+        const item = await Item.findByPk(req.params.id)
         newCart.addItem(item, {through: {quantity: 5}})
         res.send(newCart)
       }
