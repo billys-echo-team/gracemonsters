@@ -105,7 +105,7 @@ const reducer = (cart = [], action) => {
     //     cartItems: [...state.items, action.item]
     //   }
     case DELETE_CART_ITEM:
-      return cart.filter(item => item.id !== action.item.id)
+      return cart.filter(item => item.id !== action.id)
     default:
       return cart
   }
