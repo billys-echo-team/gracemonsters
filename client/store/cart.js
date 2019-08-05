@@ -6,8 +6,13 @@ const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
 const ADD_CART_ITEM = 'ADD_ITEM'
 const DELETE_CART_ITEM = 'DELETE_ITEM'
+const CHECKOUT = 'CHECKOUT'
 
 // ACTION CREATORS
+const checkout = () => ({
+  type: CHECKOUT
+})
+
 const getCartItems = items => ({
   type: GET_CART,
   items
@@ -63,7 +68,7 @@ export const addCartItemThunk = id => async dispatch => {
       dispatch(addCartItem(data))
     }
   } catch (error) {
-    console.error(err)
+    console.error(error)
   }
 }
 export const deleteCartItemThunk = id => async dispatch => {
@@ -71,9 +76,16 @@ export const deleteCartItemThunk = id => async dispatch => {
     await axios.delete(`/api/cart/`, {data: {itemId: id}})
     dispatch(deleteCartItem(id))
   } catch (error) {
-    console.error(err)
+    console.error(error)
   }
 }
+
+export const checkoutThunk = order => async dispatch => {
+  await axios.post('/api/cart/', order)
+  await axios.put('api/shop', order)
+  dispatch(checkout())
+}
+
 // REDUCER
 const reducer = (cart = [], action) => {
   switch (action.type) {
@@ -104,6 +116,8 @@ const reducer = (cart = [], action) => {
     //   }
     case DELETE_CART_ITEM:
       return cart.filter(item => item.id !== action.id)
+    case CHECKOUT:
+      return cart
     default:
       return cart
   }

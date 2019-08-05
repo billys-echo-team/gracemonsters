@@ -1,5 +1,9 @@
 import React from 'react'
-import {getCartItemsThunk, deleteCartItemThunk} from '../store/cart'
+import {
+  getCartItemsThunk,
+  deleteCartItemThunk,
+  checkoutThunk
+} from '../store/cart'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
@@ -9,7 +13,8 @@ class Cart extends React.Component {
   }
 
   render() {
-    console.log('******', this.props.cart)
+    console.log('******', this.props)
+    // console.log('&&&&&', req.user)
     return (
       //   <h1>test</h1>
       <div className="cart-list">
@@ -40,6 +45,13 @@ class Cart extends React.Component {
             </div>
           ))}
         </div>
+        <button
+          type="submit"
+          className="cart-checkout"
+          onClick={() => this.props.checkoutThunk(this.props.cart.id)}
+        >
+          Checkout
+        </button>
       </div>
     )
   }
@@ -53,7 +65,9 @@ const mapDispatchToProps = dispatch => {
   return {
     getCartItemsThunk: () => dispatch(getCartItemsThunk()),
 
-    deleteCartItemThunk: id => dispatch(deleteCartItemThunk(id))
+    deleteCartItemThunk: id => dispatch(deleteCartItemThunk(id)),
+
+    checkoutThunk: order => dispatch(checkoutThunk(order))
   }
 }
 
