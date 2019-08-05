@@ -52,12 +52,17 @@ router.put('/', async (req, res, next) => {
 router.delete('/', async (req, res, next) => {
   if (req.user) {
     const cart = await Order.findOne({
-      where: {userId: req.user.id, isCart: true}
+      where: {userId: req.user.id, isCart: true},
+      include: [
+        {
+          model: Item
+        }
+      ]
     })
     if (cart) {
       const item = await Item.findByPk(req.body.itemId)
       cart.removeItem(item)
-      res.send(cart)
+      res.send(cart.items)
     } else {
       res.sendStatus(404)
     }
