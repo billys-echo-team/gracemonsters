@@ -26,9 +26,9 @@ const addCartItem = item => ({
   type: ADD_CART_ITEM,
   item
 })
-const deleteCartItem = id => ({
+const deleteCartItem = item => ({
   type: DELETE_CART_ITEM,
-  id
+  item
 })
 //THUNKS
 export const getCartItemsThunk = () => async dispatch => {
@@ -105,7 +105,7 @@ const reducer = (cart = [], action) => {
     //     cartItems: [...state.items, action.item]
     //   }
     case DELETE_CART_ITEM:
-      return cart.filter(item => item.id !== action.id)
+      return action.item.items
     default:
       return cart
   }
