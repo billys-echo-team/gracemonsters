@@ -26,9 +26,9 @@ const addCartItem = item => ({
   type: ADD_CART_ITEM,
   item
 })
-const deleteCartItem = item => ({
+const deleteCartItem = id => ({
   type: DELETE_CART_ITEM,
-  item
+  id
 })
 //THUNKS
 export const getCartItemsThunk = () => async dispatch => {
@@ -68,10 +68,8 @@ export const addCartItemThunk = id => async dispatch => {
 }
 export const deleteCartItemThunk = id => async dispatch => {
   try {
-    let {data} = await axios.delete(`/api/cart/`, {data: {itemId: id}})
-    if (data) {
-      dispatch(deleteCartItem(data))
-    }
+    await axios.delete(`/api/cart/`, {data: {itemId: id}})
+    dispatch(deleteCartItem(id))
   } catch (error) {
     console.error(err)
   }
@@ -105,7 +103,7 @@ const reducer = (cart = [], action) => {
     //     cartItems: [...state.items, action.item]
     //   }
     case DELETE_CART_ITEM:
-      return action.item.items
+      return cart.filter(item => item.id !== action.id)
     default:
       return cart
   }
