@@ -45,7 +45,7 @@ const seed = async () => {
     const bulbasaur = await Item.create({
       name: 'Bulbasaur',
       element: 'grass',
-      price: 20,
+      price: 2000,
       stock: 2,
       imageUrl:
         'https://cdn.bulbagarden.net/upload/thumb/2/21/001Bulbasaur.png/500px-001Bulbasaur.png',
@@ -55,7 +55,7 @@ const seed = async () => {
     const charmander = await Item.create({
       name: 'Charmander',
       element: 'fire',
-      price: 20,
+      price: 2000,
       stock: 1,
       imageUrl:
         'https://cdn.bulbagarden.net/upload/thumb/7/73/004Charmander.png/500px-004Charmander.png',
@@ -64,7 +64,7 @@ const seed = async () => {
     await Item.create({
       name: 'Squirtle',
       element: 'water',
-      price: 20,
+      price: 2000,
       stock: 1,
       imageUrl:
         'https://cdn.bulbagarden.net/upload/thumb/3/39/007Squirtle.png/500px-007Squirtle.png',
