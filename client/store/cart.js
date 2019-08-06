@@ -40,6 +40,7 @@ const deleteCartItem = id => ({
   type: DELETE_CART_ITEM,
   id
 })
+
 //THUNKS
 export const newOrderThunk = order => async dispatch => {
   await axios.post(`/api/order/`, order)
@@ -93,9 +94,6 @@ export const deleteCartItemThunk = item => async dispatch => {
 export const checkoutThunk = order => async dispatch => {
   //*toggling current order isCart to false
   await axios.put(`/api/orders/${order}`)
-
-  //*getting associated userModel
-  // const user = await axios.get(`/api/users/${order}`)
 
   //*create new order for user
   await axios.post(`/api/orders/`)

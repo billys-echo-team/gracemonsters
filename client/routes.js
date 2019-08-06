@@ -6,6 +6,8 @@ import {Login, Signup, UserHome} from './components'
 import {me} from './store'
 import singleItem from './components/singleItem'
 import NoPermission from './components/noPermission'
+import orderHistory from './components/orderHistory'
+import checkout from './components/checkout'
 
 /**
  * COMPONENT
@@ -25,10 +27,12 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
         <Route path="/shop/:id" component={singleItem} />
         <Route exact path="/nopermission" component={NoPermission} />
+        <Route exact path="/checkout" component={checkout} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route path="/orderhistory" component={orderHistory} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
