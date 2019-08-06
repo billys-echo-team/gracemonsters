@@ -27,7 +27,8 @@ const seed = async () => {
       address: '123 Kanto Region',
       payment: null,
       password: '456',
-      imageUrl: 'https://cdn.bulbagarden.net/upload/6/6a/Brock_SM.png'
+      imageUrl: 'https://cdn.bulbagarden.net/upload/6/6a/Brock_SM.png',
+      isAdmin: true
     })
     await User.create({
       userName: 'iamMisty',
