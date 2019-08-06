@@ -1,12 +1,21 @@
 const router = require('express').Router()
 const Order = require('../db/models/order')
 const User = require('../db/models/user')
+const Item = require('../db/models/item')
 
 module.exports = router
 
 router.get('/', async (req, res, next) => {
   const orders = await Order.findAll()
 
+  res.send(orders)
+})
+
+router.get('/:id', async (req, res, next) => {
+  const orders = await Order.findAll({
+    where: {userId: req.params.id},
+    include: [{model: Item}]
+  })
   res.send(orders)
 })
 
