@@ -10,10 +10,11 @@ class singleItem extends React.Component {
     this.props.getSingleItemThunk(this.props.match.params.id)
   }
 
-  // handleSubmit(event) {
-  //   event.preventDefault()
-  //   this.props.addCartItemThunk(this.props.match.params.id)
-  // }
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.addCartItemThunk(this.props.match.params.id)
+  }
+
   render() {
     console.log(this.props, '------*******TEST MAN******-----------------')
     const item = this.props.items.find(
@@ -34,7 +35,7 @@ class singleItem extends React.Component {
             <button
               type="submit"
               className="nes-btn is-success"
-              onClick={history.back}
+              onClick={window.history.back}
             >
               back
             </button>

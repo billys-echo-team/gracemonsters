@@ -20,9 +20,11 @@ class Cart extends React.Component {
   }
 
   render() {
-    console.log('******', this.props)
+    // console.log('******', this.props)
+    if (this.props.cart.length > 0) {
+      // console.log(this.props.cart.reduce((sum = 0, item) => {return 5}))
+    }
     return (
-      //   <h1>test</h1>
       <div className="cart-list">
         <h1>Cart</h1>
         <div className="column-display">
@@ -68,17 +70,28 @@ class Cart extends React.Component {
             </div>
           ))}
         </div>
-        <button
-          type="submit"
-          className="cart-checkout"
-          onClick={() => {
-            this.props.checkoutThunk(this.props.cart[0].order_item.orderId)
+        <div>
+          {this.props.cart.length > 0 ? (
+            <div>
+              <h1> Total: </h1>
+              <button
+                type="submit"
+                className="cart-checkout"
+                onClick={() => {
+                  this.props.checkoutThunk(
+                    this.props.cart[0].order_item.orderId
+                  )
 
-            this.props.history.push('/checkout')
-          }}
-        >
-          Checkout
-        </button>
+                  this.props.history.push('/checkout')
+                }}
+              >
+                Checkout
+              </button>
+            </div>
+          ) : (
+            <h6>(Nothing in cart)</h6>
+          )}
+        </div>
       </div>
     )
   }
