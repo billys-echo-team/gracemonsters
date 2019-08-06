@@ -23,17 +23,25 @@ class singleItem extends React.Component {
       <NotFound />
     ) : (
       <div key={item.id}>
-        <div>
+        <div className="nes-container is-rounded">
           <main>
             <h1>Name: {item.name}</h1>
-            <h3>Element: {item.element}</h3>
+            <h3>{item.element}</h3>
             <p>Description: {item.description}</p>
             <p>Price: ${item.price}</p>
             <img className="single-school-pic" src={item.imageUrl} />
+            <br />
             <button
               type="submit"
-              className="button-add-item"
-              onClick={() => this.props.addCartItemThunk(item.id)}
+              className="nes-btn is-success"
+              onClick={history.back}
+            >
+              test
+            </button>
+            <button
+              type="submit"
+              className="nes-btn is-success"
+              onClick={() => this.props.addCartItemThunk(item)}
             >
               Add to Cart
             </button>
@@ -55,8 +63,8 @@ const mapDispatchToProps = dispatch => {
     getSingleItemThunk: id => {
       dispatch(getSingleItemThunk(id))
     },
-    addCartItemThunk: id => {
-      dispatch(addCartItemThunk(id))
+    addCartItemThunk: item => {
+      dispatch(addCartItemThunk(item))
     }
   }
 }

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {order_item, Order, Item} = require('../db/models')
+const {OrderItem, Order, Item} = require('../db/models')
 
 module.exports = router
 
@@ -27,27 +27,26 @@ router.get('/', async (req, res, next) => {
 router.put('/', async (req, res, next) => {
   try {
     if (req.user) {
-      const cart = await Order.findOne({
-        where: {userId: req.user.id, isCart: true}
+      const cartItem = await Order.findOne({
+        where: {userId: req.user.id, isCart: true},
+        include: [
+          {
+            model: Item,
+            where: {id: req.body.item.id}
+          }
+        ]
       })
-      if (cart) {
-        const item = await Item.findByPk(3)
-        cart.addItem(item) //, {through: {quantity: 5}})
-        res.send(cart)
-      } else {
-        // const newCart = await Order.create({
-        //   date: 'right now',
-        //   userId: req.user.id,
-        //   isCart: true,
-        //   payment: 'test credit card',
-        //   email: req.user.email,
-        //   address: req.user.address,
-        //   shippingStatus: 'pending'
-        // })
-        // const item = await Item.findByPk(1)
-        // newCart.addItem(item, {through: {quantity: 5}})
-        // res.send(newCart)
-      }
+
+      const item = await Item.findByPk(req.body.item.id)
+      const stockUpdate = (item.stock += 1)
+
+      const newCount = (cartItem.items[0].order_item.quantity -= 1)
+      await OrderItem.update(
+        {quantity: newCount},
+        {where: {orderId: cartItem.id, itemId: req.body.item.id}}
+      )
+      item.update({stock: stockUpdate})
+      res.send(200)
     } else {
       res.sendstatus(404)
     }
@@ -66,21 +65,12 @@ router.delete('/', async (req, res, next) => {
         }
       ]
     })
-    if (cart) {
-      const item = await Item.findByPk(req.body.itemId)
-      cart.removeItem(item)
-      res.send(cart.items)
-    } else {
-      res.sendStatus(404)
-    }
+
+    const item = await Item.findByPk(req.body.item.id)
+    cart.removeItem(item)
+    item.update({stock: item.stock + req.body.item.order_item.quantity})
+    res.send(cart.items)
   } else {
     res.sendStatus(404)
   }
 })
-
-// include: [
-//   {
-//     model: Item
-//   }
-// ],
-// defaults: {isCart: false}

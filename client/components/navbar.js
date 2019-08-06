@@ -8,7 +8,9 @@ import cart from './cart'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>BOILERMAKER</h1>
+    <h1>
+      <img src="Grace-Monster.png" />
+    </h1>
     <nav>
       {isLoggedIn ? (
         <div>
