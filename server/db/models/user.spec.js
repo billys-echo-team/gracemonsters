@@ -4,12 +4,12 @@ const {expect} = require('chai')
 const db = require('../index')
 const User = db.model('user')
 
-describe('User model', () => {
+xdescribe('User model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  describe('instanceMethods', () => {
+  xdescribe('instanceMethods', () => {
     describe('correctPassword', () => {
       let Ash
 
