@@ -3,11 +3,11 @@ const db = require('../db')
 
 const Order = db.define('order', {
   date: {
-    type: Sequelize.DATE,
-    allowNull: false,
+    type: Sequelize.STRING,
+    // allowNull: false,
     validate: {
-      notEmpty: true,
-      isDate: true
+      notEmpty: true
+      // isDate: true
     }
   },
   userId: {

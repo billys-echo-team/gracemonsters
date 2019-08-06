@@ -2,19 +2,23 @@ import React from 'react'
 import {
   getCartItemsThunk,
   deleteCartItemThunk,
-  checkoutThunk
+  checkoutThunk,
+  newOrderThunk
 } from '../store/cart'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import history from '../history'
+import Checkout from './checkout'
 
 class Cart extends React.Component {
+  handleSubmit() {}
+
   componentDidMount() {
     this.props.getCartItemsThunk()
   }
 
   render() {
     console.log('******', this.props)
-    // console.log('&&&&&', req.user)
     return (
       //   <h1>test</h1>
       <div className="cart-list">
@@ -48,7 +52,11 @@ class Cart extends React.Component {
         <button
           type="submit"
           className="cart-checkout"
-          onClick={() => this.props.checkoutThunk(this.props.cart.id)}
+          onClick={() => {
+            this.props.checkoutThunk(this.props.cart[0].order_item.orderId)
+
+            this.props.history.push('/checkout')
+          }}
         >
           Checkout
         </button>

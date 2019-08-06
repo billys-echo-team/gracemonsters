@@ -35,12 +35,18 @@ router.put('/', async (req, res, next) => {
         cart.addItem(item) //, {through: {quantity: 5}})
         res.send(cart)
       } else {
-        const newCart = await Order.create({
-          where: {userId: req.user.id, isCart: true}
-        })
-        const item = await Item.findByPk(1)
-        newCart.addItem(item, {through: {quantity: 5}})
-        res.send(newCart)
+        // const newCart = await Order.create({
+        //   date: 'right now',
+        //   userId: req.user.id,
+        //   isCart: true,
+        //   payment: 'test credit card',
+        //   email: req.user.email,
+        //   address: req.user.address,
+        //   shippingStatus: 'pending'
+        // })
+        // const item = await Item.findByPk(1)
+        // newCart.addItem(item, {through: {quantity: 5}})
+        // res.send(newCart)
       }
     } else {
       res.sendstatus(404)

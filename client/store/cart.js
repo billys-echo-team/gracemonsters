@@ -7,8 +7,13 @@ const DECREMENT_QTY = 'DECREMENT_QTY'
 const ADD_CART_ITEM = 'ADD_ITEM'
 const DELETE_CART_ITEM = 'DELETE_ITEM'
 const CHECKOUT = 'CHECKOUT'
+const NEW_ORDER = 'NEW_ORDER'
 
 // ACTION CREATORS
+const newOrder = () => ({
+  type: NEW_ORDER
+})
+
 const checkout = () => ({
   type: CHECKOUT
 })
@@ -36,6 +41,11 @@ const deleteCartItem = id => ({
   id
 })
 //THUNKS
+export const newOrderThunk = order => async dispatch => {
+  await axios.post(`/api/order/`, order)
+  dispatch(newOrder())
+}
+
 export const getCartItemsThunk = () => async dispatch => {
   try {
     let {data} = await axios.get(`/api/cart`)
@@ -81,8 +91,15 @@ export const deleteCartItemThunk = id => async dispatch => {
 }
 
 export const checkoutThunk = order => async dispatch => {
-  await axios.post('/api/cart/', order)
-  await axios.put('api/shop', order)
+  //*toggling current order isCart to false
+  await axios.put(`/api/orders/${order}`)
+
+  //*getting associated userModel
+  // const user = await axios.get(`/api/users/${order}`)
+
+  //*create new order for user
+  await axios.post(`/api/orders/`)
+
   dispatch(checkout())
 }
 
@@ -117,7 +134,7 @@ const reducer = (cart = [], action) => {
     case DELETE_CART_ITEM:
       return cart.filter(item => item.id !== action.id)
     case CHECKOUT:
-      return cart
+      return []
     default:
       return cart
   }
