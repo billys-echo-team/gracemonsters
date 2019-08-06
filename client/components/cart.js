@@ -20,9 +20,18 @@ class Cart extends React.Component {
   }
 
   render() {
-    console.log('******', this.props)
+    // console.log('******', this.props)
+    if (this.props.cart.length) {
+      console.log(
+        this.props.cart[0].price + this.props.cart[0].order_item.quantity
+      )
+      console.log(
+        this.props.cart
+          .map(item => item.order_item.quantity * item.price)
+          .reduce((sum, item) => sum + item)
+      )
+    }
     return (
-      //   <h1>test</h1>
       <div className="cart-list">
         <h1>Cart</h1>
         <div className="column-display">
@@ -33,7 +42,9 @@ class Cart extends React.Component {
                   <Link to={`shop/${item.id}`} className="link">
                     <img src={item.imageUrl} className="item-img" />
                     <div className="item-name">{item.name}</div>
-                    <div className="item-price">Price : ${item.price}</div>
+                    <div className="item-price">
+                      Price : ${item.price / 100}
+                    </div>
                   </Link>
                 </div>
                 <span>
@@ -68,17 +79,33 @@ class Cart extends React.Component {
             </div>
           ))}
         </div>
-        <button
-          type="submit"
-          className="cart-checkout"
-          onClick={() => {
-            this.props.checkoutThunk(this.props.cart[0].order_item.orderId)
+        <div>
+          {this.props.cart.length > 0 ? (
+            <div>
+              <h1>
+                {' '}
+                Total: ${this.props.cart
+                  .map(item => item.order_item.quantity * item.price)
+                  .reduce((sum, item) => sum + item) / 100}
+              </h1>
+              <button
+                type="submit"
+                className="cart-checkout"
+                onClick={() => {
+                  this.props.checkoutThunk(
+                    this.props.cart[0].order_item.orderId
+                  )
 
-            this.props.history.push('/checkout')
-          }}
-        >
-          Checkout
-        </button>
+                  this.props.history.push('/checkout')
+                }}
+              >
+                Checkout
+              </button>
+            </div>
+          ) : (
+            <h6>(Nothing in cart)</h6>
+          )}
+        </div>
       </div>
     )
   }
