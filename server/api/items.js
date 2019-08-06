@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Item, Order} = require('../db/models')
+const {Item, Order, OrderItem} = require('../db/models')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -23,40 +23,32 @@ router.get('/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     if (req.user) {
-      // const cart = await Order.findOne({
-      //   where: {userId: req.user.id, isCart: true}
-      // })
-      const cart = await Order.findOne({
+      const cartItem = await Order.findOne({
         where: {userId: req.user.id, isCart: true},
         include: [
           {
-            model: Item
+            model: Item,
+            where: {id: req.params.id}
           }
         ]
       })
-      if (cart) {
-        const itemInCart = cart.items.find(
-          oneItem => oneItem.id === req.params.id
+      const item = await Item.findByPk(req.params.id)
+      const stockUpdate = (item.stock -= 1)
+      if (cartItem) {
+        console.log(cartItem)
+        const newCount = (cartItem.items[0].order_item.quantity += 1)
+        await OrderItem.update(
+          {quantity: newCount},
+          {where: {orderId: cartItem.id, itemId: req.params.id}}
         )
-
-        if (itemInCart) {
-          // } else {
-
-          const item = await Item.findByPk(req.params.id)
-          cart.addItem(item, {through: {quantity: itemInCart.quantity + 1}})
-          res.send(cart)
-          console.log(item)
-        } else {
-          const item = await Item.findByPk(req.params.id)
-          cart.addItem(item, {through: {quantity: 1}})
-          res.send(cart)
-        }
+        item.update({stock: stockUpdate})
+        res.send(200)
       } else {
-        const newCart = await Order.create({
+        const newCart = await Order.findOne({
           where: {userId: req.user.id, isCart: true}
         })
-        const item = await Item.findByPk(req.params.id)
-        newCart.addItem(item, {through: {quantity: 5}})
+        newCart.addItem(item, {through: {quantity: 1}})
+        item.update({stock: stockUpdate})
         res.send(newCart)
       }
     } else {
