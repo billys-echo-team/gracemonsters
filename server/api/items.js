@@ -1,6 +1,17 @@
 const router = require('express').Router()
 const {Item, Order, OrderItem} = require('../db/models')
+
 module.exports = router
+
+function isAdmin(req, res, next) {
+  if (!req.user) {
+    res.redirect('/nopermission')
+  } else if (req.user && req.user.isAdmin) {
+    return next()
+  } else {
+    res.redirect('/nopermission')
+  }
+}
 
 router.get('/', async (req, res, next) => {
   try {
@@ -56,4 +67,10 @@ router.put('/:id', async (req, res, next) => {
   } catch (error) {
     next(error)
   }
+})
+
+router.delete('/:id', isAdmin, async (req, res, next) => {
+  const foundItem = await Item.findByPk(req.params.id)
+  foundItem.destroy()
+  res.send(`Goodbye`)
 })

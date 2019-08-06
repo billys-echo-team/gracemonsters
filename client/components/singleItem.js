@@ -36,7 +36,7 @@ class singleItem extends React.Component {
               className="nes-btn is-success"
               onClick={history.back}
             >
-              test
+              back
             </button>
             <button
               type="submit"
