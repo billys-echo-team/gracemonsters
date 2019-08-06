@@ -2,6 +2,7 @@
 
 import React from 'react'
 import {getItemsThunk, deleteItemThunk} from '../store/itemsReducer'
+import {addCartItemThunk} from '../store/cart'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
@@ -25,13 +26,13 @@ class AllItems extends React.Component {
                     <div className="item-name">{item.name}</div>
                   </div>
                 </Link>
-                {/* <button
+                <button
                   type="submit"
-                  className="button-delete-item"
-                  onClick={() => this.props.deleteItem(item.id)}
+                  className="nes-btn is-success"
+                  onClick={() => this.props.addCartItemThunk(item)}
                 >
-                  X
-                </button> */}
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))}
@@ -53,6 +54,9 @@ const mapDispatchToProps = dispatch => {
     },
     deleteItem: id => {
       dispatch(deleteItemThunk(id))
+    },
+    addCartItemThunk: item => {
+      dispatch(addCartItemThunk(item))
     }
   }
 }

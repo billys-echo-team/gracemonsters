@@ -30,17 +30,16 @@ class Cart extends React.Component {
             <div key={item.id}>
               <div className="item-button-container">
                 <div className="item-box">
-                  <Link to={`items/${item.id}`} className="link">
+                  <Link to={`shop/${item.id}`} className="link">
                     <img src={item.imageUrl} className="item-img" />
                     <div className="item-name">{item.name}</div>
-                    <div className="item-price">Price : {item.price}</div>
-                    <div className="item-id">ITEM ID {item.id}</div>
+                    <div className="item-price">Price : ${item.price}</div>
                   </Link>
                 </div>
                 <span>
                   <button
                     type="submit"
-                    className="COOL BUTTON"
+                    className="nes-btn is-primary"
                     onClick={() =>
                       item.order_item.quantity === 1
                         ? this.props.deleteCartItemThunk(item)
@@ -52,7 +51,7 @@ class Cart extends React.Component {
                   <div className="item-qty">{item.order_item.quantity}</div>
                   <button
                     type="submit"
-                    className="COOL BUTTON"
+                    className="nes-btn is-primary"
                     onClick={() => this.props.addCartItemThunk(item)}
                   >
                     +
