@@ -3,7 +3,9 @@ import {
   getCartItemsThunk,
   deleteCartItemThunk,
   checkoutThunk,
-  newOrderThunk
+  newOrderThunk,
+  addCartItemThunk,
+  decrementQtyThunk
 } from '../store/cart'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -27,21 +29,39 @@ class Cart extends React.Component {
           {this.props.cart.map(item => (
             <div key={item.id}>
               <div className="item-button-container">
-                <Link to={`items/${item.id}`} className="link">
-                  <div className="item-box">
+                <div className="item-box">
+                  <Link to={`items/${item.id}`} className="link">
                     <img src={item.imageUrl} className="item-img" />
                     <div className="item-name">{item.name}</div>
                     <div className="item-price">Price : {item.price}</div>
                     <div className="item-id">ITEM ID {item.id}</div>
-                    <div className="item-qty">
-                      Quantity: {item.order_item.quantity}
-                    </div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
+                <span>
+                  <button
+                    type="submit"
+                    className="COOL BUTTON"
+                    onClick={() =>
+                      item.order_item.quantity === 1
+                        ? this.props.deleteCartItemThunk(item)
+                        : this.props.decrementQtyThunk(item)
+                    }
+                  >
+                    -
+                  </button>
+                  <div className="item-qty">{item.order_item.quantity}</div>
+                  <button
+                    type="submit"
+                    className="COOL BUTTON"
+                    onClick={() => this.props.addCartItemThunk(item)}
+                  >
+                    +
+                  </button>
+                </span>
                 <button
                   type="submit"
                   className="button-delete-item"
-                  onClick={() => this.props.deleteCartItemThunk(item.id)}
+                  onClick={() => this.props.deleteCartItemThunk(item)}
                 >
                   Remove from Cart
                 </button>
@@ -73,9 +93,13 @@ const mapDispatchToProps = dispatch => {
   return {
     getCartItemsThunk: () => dispatch(getCartItemsThunk()),
 
-    deleteCartItemThunk: id => dispatch(deleteCartItemThunk(id)),
+    deleteCartItemThunk: item => dispatch(deleteCartItemThunk(item)),
 
-    checkoutThunk: order => dispatch(checkoutThunk(order))
+    checkoutThunk: order => dispatch(checkoutThunk(order)),
+
+    addCartItemThunk: item => dispatch(addCartItemThunk(item)),
+
+    decrementQtyThunk: item => dispatch(decrementQtyThunk(item))
   }
 }
 

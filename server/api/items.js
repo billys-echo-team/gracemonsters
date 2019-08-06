@@ -35,7 +35,6 @@ router.put('/:id', async (req, res, next) => {
       const item = await Item.findByPk(req.params.id)
       const stockUpdate = (item.stock -= 1)
       if (cartItem) {
-        console.log(cartItem)
         const newCount = (cartItem.items[0].order_item.quantity += 1)
         await OrderItem.update(
           {quantity: newCount},

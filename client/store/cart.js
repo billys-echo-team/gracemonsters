@@ -23,18 +23,18 @@ const getCartItems = items => ({
   items
 })
 // qty increase
-const incrementQty = item => ({
+const incrementQty = id => ({
   type: INCREMENT_QTY,
-  item
+  id
 })
 // qty decrease
-const decrementQty = item => ({
+const decrementQty = items => ({
   type: DECREMENT_QTY,
-  item
+  items
 })
-const addCartItem = item => ({
+const addCartItem = items => ({
   type: ADD_CART_ITEM,
-  item
+  items
 })
 const deleteCartItem = id => ({
   type: DELETE_CART_ITEM,
@@ -57,34 +57,34 @@ export const getCartItemsThunk = () => async dispatch => {
 
 export const incrementQtyThunk = id => async dispatch => {
   try {
-    let {data} = await axios.put(`/api/cart`, {data: {itemId: id}})
-    dispatch(incrementQty(data))
+    await axios.put(`/api/cart`, {data: {itemId: id, type: 'add'}})
+    dispatch(incrementQty(id))
   } catch (error) {
     console.log(err)
   }
 }
-export const decrementQtyThunk = id => async dispatch => {
+export const decrementQtyThunk = item => async dispatch => {
   try {
-    const {data} = await axios.put(`/api/cartItems/${id}`)
+    await axios.put(`/api/cart`, {item: item})
+    let {data} = await axios.get(`/api/cart`)
     dispatch(decrementQty(data))
   } catch (error) {
     console.log(err)
   }
 }
-export const addCartItemThunk = id => async dispatch => {
+export const addCartItemThunk = item => async dispatch => {
   try {
-    let {data} = await axios.put(`/api/shop/${id}`)
-    if (data) {
-      dispatch(addCartItem(data))
-    }
+    await axios.put(`/api/shop/${item.id}`)
+    let {data} = await axios.get(`/api/cart`)
+    dispatch(addCartItem(data))
   } catch (error) {
     console.error(error)
   }
 }
-export const deleteCartItemThunk = id => async dispatch => {
+export const deleteCartItemThunk = item => async dispatch => {
   try {
-    await axios.delete(`/api/cart/`, {data: {itemId: id}})
-    dispatch(deleteCartItem(id))
+    await axios.delete(`/api/cart/`, {data: {item: item}})
+    dispatch(deleteCartItem(item.id))
   } catch (error) {
     console.error(error)
   }
@@ -108,29 +108,11 @@ const reducer = (cart = [], action) => {
   switch (action.type) {
     case GET_CART:
       return action.items.items
+    case ADD_CART_ITEM:
+      return action.items.items
+    case DECREMENT_QTY:
+      return action.items.items
 
-    // case INCREMENT_QTY:
-    //   return {
-    //     ...state,
-    //     cartItems: state.cartItems.map(item => {
-    //       if (item.id !== action.item.id) {
-    //         return item
-    //       } else return action.item
-    //     })
-    //   }
-    // case DECREMENT_QTY:
-    //   return {
-    //     ...state,
-    //     cartItems: state.cartItems.map(item => {
-    //       if (item.id !== action.item.id) {
-    //         return item
-    //       } else return action.item
-    //     })
-    //   }
-    // case ADD_CART_ITEM:
-    //   return {
-    //     cartItems: [...state.items, action.item]
-    //   }
     case DELETE_CART_ITEM:
       return cart.filter(item => item.id !== action.id)
     case CHECKOUT:
