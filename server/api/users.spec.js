@@ -6,12 +6,12 @@ const db = require('../db')
 const app = require('../index')
 const User = db.model('user')
 
-xdescribe('User routes', () => {
+describe('User routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
 
-  xdescribe('/api/users/', () => {
+  describe('/api/users/', () => {
     const brocksEmail = 'brock@email.com'
 
     beforeEach(() => {
@@ -23,7 +23,8 @@ xdescribe('User routes', () => {
         address: '123 Kanto Region',
         payment: null,
         password: '456',
-        imageUrl: 'https://cdn.bulbagarden.net/upload/6/6a/Brock_SM.png'
+        imageUrl: 'https://cdn.bulbagarden.net/upload/6/6a/Brock_SM.png',
+        isAdmin: true
       })
     })
 
