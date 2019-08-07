@@ -6,7 +6,7 @@ const db = require('../db')
 const app = require('../index')
 const Item = db.model('item')
 
-xdescribe('Item routes', () => {
+describe('Item routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
@@ -24,7 +24,7 @@ xdescribe('Item routes', () => {
       })
     })
 
-    it('GET /api/shop', async () => {
+    xit('GET /api/shop', async () => {
       const res = await request(app)
         .get('/api/shop')
         .expect(200)

@@ -6,7 +6,7 @@ const db = require('../db')
 const app = require('../index')
 const User = db.model('user')
 
-xdescribe('User routes', () => {
+describe('User routes', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
@@ -23,11 +23,12 @@ xdescribe('User routes', () => {
         address: '123 Kanto Region',
         payment: null,
         password: '456',
-        imageUrl: 'https://cdn.bulbagarden.net/upload/6/6a/Brock_SM.png'
+        imageUrl: 'https://cdn.bulbagarden.net/upload/6/6a/Brock_SM.png',
+        isAdmin: true
       })
     })
 
-    it('GET /api/users', async () => {
+    xit('GET /api/users', async () => {
       const res = await request(app)
         .get('/api/users')
         .expect(200)
