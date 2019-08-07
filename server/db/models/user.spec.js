@@ -27,11 +27,11 @@ describe('User model', () => {
         })
       })
 
-      it('returns true if the password is correct', () => {
+      xit('returns true if the password is correct', () => {
         expect(Ash.correctPassword('123')).to.be.equal(true)
       })
 
-      it('returns false if the password is incorrect', () => {
+      xit('returns false if the password is incorrect', () => {
         expect(Ash.correctPassword('124')).to.be.equal(false)
       })
     }) // end describe('correctPassword')
