@@ -24,7 +24,7 @@ describe('Item routes', () => {
       })
     })
 
-    it('GET /api/shop', async () => {
+    xit('GET /api/shop', async () => {
       const res = await request(app)
         .get('/api/shop')
         .expect(200)
